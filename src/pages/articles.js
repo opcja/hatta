@@ -4,7 +4,6 @@ import ArticlesPreview from "../components/ArticlesPreview/ArticlesPreview"
 import styled from "styled-components"
 import PageInfo from "../components/PageInfo/PageInfo"
 import slugify from "slugify"
-import { getImage } from "gatsby-plugin-image"
 
 const ArticlesWrapper = styled.div`
   display: grid;

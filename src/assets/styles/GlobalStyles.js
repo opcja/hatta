@@ -8,6 +8,8 @@ const GlobalStyles = createGlobalStyle`
   *::before,
   *::after {
     box-sizing: inherit;
+    margin: 0;
+    padding: 0;
   }
   body {
     margin: 0;
@@ -19,8 +21,15 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
     font-family: 'Montserrat';
   }
+
+  h1 {
+    font-size: 52px;  
+    margin-bottom: 12px;
+    margin-top: 64px;
+  }
+
   p {
-    font-size: 16px;
+    font-size: 18px;
   }
   ul {
     padding: 0;
