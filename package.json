@@ -11,6 +11,7 @@
     "datocms-html-to-structured-text": "^2.0.1",
     "datocms-structured-text-to-dom-nodes": "^2.0.1",
     "dotenv": "^16.0.0",
+    "formik": "^2.2.9",
     "gatsby": "^4.7.1",
     "gatsby-plugin-gatsby-cloud": "^4.7.0",
     "gatsby-plugin-google-fonts-v2": "^1.0.0",
@@ -31,7 +32,8 @@
     "react-dom": "^17.0.1",
     "react-helmet": "^6.1.0",
     "slugify": "^1.6.5",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "prettier": "^2.5.1"
