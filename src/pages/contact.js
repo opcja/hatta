@@ -1,100 +1,96 @@
 import React from "react"
 import { navigate } from "gatsby-link"
+import styled from "styled-components"
+import { Formik, ErrorMessage, Form, Field } from "formik"
+import * as Yup from "yup"
 
-function encode(data) {
+const Describtion = styled.p`
+  width: 32%;
+  margin-bottom: 36px;
+`
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 36px 0;
+`
+
+const encode = data => {
   return Object.keys(data)
     .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
     .join("&")
 }
 
 export default function Contact() {
-  const [state, setState] = React.useState({})
-
-  const handleChange = e => {
-    setState({ ...state, [e.target.name]: e.target.value })
-  }
-
-  const handleSubmit = e => {
-    e.preventDefault()
-    const form = e.target
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode({
-        "form-name": form.getAttribute("name"),
-        ...state,
-      }),
-    })
-      .then(() => navigate(form.getAttribute("action")))
-      .catch(error => alert(error))
-  }
-
   return (
     <>
-      <h1>Contact</h1>
-      <form
-        name="contact-netly"
-        method="post"
-        action="/thanks/"
-        data-netlify="true"
-        data-netlify-honeypot="bot-field"
-        onSubmit={handleSubmit}
+      <h1>contact</h1>
+      <Describtion>
+        While artists work from real to the abstract, architects must work from
+        the abstract to the real.{" "}
+      </Describtion>
+      <p>
+        <strong>Contact reason</strong>
+      </p>
+      <p>
+        <strong>project</strong> | cooperation | other
+      </p>
+      <Formik
+        initialValues={{ name: "", email: "", message: "" }}
+        validationSchema={Yup.object({
+          name: Yup.string()
+            .min(3, "Must be 15 characters or less")
+            .required("Required"),
+          email: Yup.string()
+            .email("Invalid email address")
+            .required("Required"),
+          message: Yup.string()
+            .min(6, "Must be 15 characters or less")
+            .required("Required"),
+        })}
+        onSubmit={data => {
+          console.log(data)
+          fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: encode({
+              "form-name": "contact-form",
+              ...data,
+            }),
+          })
+            .then(() => {
+              alert("Send")
+            })
+            .catch(error => alert(error))
+        }}
       >
-        {/* The `form-name` hidden field is required to support form submissions without JavaScript */}
-        <input type="hidden" name="form-name" value="contact" />
-        <p hidden>
-          <label>
-            Don’t fill this out:{" "}
-            <input name="bot-field" onChange={handleChange} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Your name:
-            <br />
-            <input type="text" name="name" onChange={handleChange} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Your email:
-            <br />
-            <input type="email" name="email" onChange={handleChange} />
-          </label>
-        </p>
-        <p>
-          <label>
-            Message:
-            <br />
-            <textarea name="message" onChange={handleChange} />
-          </label>
-        </p>
-        <p>
-          <button type="submit">Send</button>
-        </p>
-      </form>
+        <Form
+          name="contact-form"
+          data-netlify="true"
+          data-netlify-honeypot="bot-field"
+        >
+          <Field type="hidden" name="form-name" />
+          <Field type="hidden" name="bot-field" />
+
+          <label htmlFor="name">Your name</label>
+          <Field name="name" type="text" />
+          <ErrorMessage name="name" />
+          <br />
+          <label htmlFor="email">Your email</label>
+          <Field name="email" type="text" />
+          <ErrorMessage name="email" />
+          <br />
+          <label htmlFor="message">Your message</label>
+          <Field as="textarea" name="message" type="text" />
+          <ErrorMessage name="message" />
+          <br />
+          <button type="submit">Sand</button>
+        </Form>
+      </Formik>
     </>
   )
 }
-
-// import React from "react"
-// import ReactDOM from "react-dom"
-// import {
-//   Formik,
-//   useField,
-//   Form,
-//   ErrorMessage,
-//   useFormik,
-//   FormikProvider,
-// } from "formik"
-// import * as Yup from "yup"
-// import { navigate } from "gatsby-link"
-// import styled from "styled-components"
-
-// const Describtion = styled.p`
-//   width: 32%;
-//   margin-bottom: 36px;
-// `
 
 // const StyledForm = styled(Form)`
 //   display: flex;
@@ -314,17 +310,7 @@ export default function Contact() {
 
 //   return (
 //     <>
-//       <h1>contact</h1>
-//       <Describtion>
-//         While artists work from real to the abstract, architects must work from
-//         the abstract to the real.{" "}
-//       </Describtion>
-//       <p>
-//         <strong>Contact reason</strong>
-//       </p>
-//       <p>
-//         <strong>project</strong> | cooperation | other
-//       </p>
+//
 //       <FormikProvider value={formik}>
 //         <StyledForm
 //           method="post"
