@@ -208,7 +208,7 @@ export default function Contact() {
             }),
           })
             .then(() => {
-              alert("Send")
+              navigate("/thanks/")
             })
             .catch(error => alert(error))
         }}
